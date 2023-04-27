@@ -23,6 +23,9 @@ const title = document.querySelector(".title-Input");
 const category = document.querySelector(".cat");
 const bg = document.querySelector(".bg-active");
 const plus = document.querySelector(".plus");
+const form = document.querySelector("form");
+const textEditor = document.querySelector(".text-editor");
+const submitBtn = document.querySelector("#submit-btn");
 
 ///Markup
 
@@ -68,6 +71,13 @@ const displayFormatting = function (data) {
 firstAddNoteButton.addEventListener("click", function () {
   toggleWindow();
 });
+
+submitBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+  const html = `<div style="text-align: ${textEditor.style.textAlign}">${textEditor.innerHTML}</div>`;
+  console.log(html);
+});
+
 //New Note
 const toggleWindow = function () {
   overlay.classList.toggle("hidden");
@@ -112,5 +122,25 @@ const FirstView = function () {
   plus.classList.toggle("hidden");
   bg.classList.toggle("hidden");
 };
+
+const formatText = function (command, value = null) {
+  if (command === "insertUnorderedList") {
+    document.execCommand(command, false, value);
+    const ul = textEditor.querySelector("ul");
+    if (ul) {
+      ul.classList.add("ul-list");
+    }
+  } else if (command === "insertOrderedList") {
+    document.execCommand(command, false, value);
+    const ol = textEditor.querySelector("ol");
+    if (ol) {
+      ol.classList.add("ol-list");
+    }
+  } else {
+    document.execCommand(command, false, value);
+  }
+  textEditor.focus();
+};
+
 FirstView();
 overlay.classList.toggle("hidden");
