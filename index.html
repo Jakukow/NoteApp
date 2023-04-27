@@ -1,75 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <title>Notes App</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,600,700"
-    />
+    <title>Edytor Tekstu</title>
+    <style>
+      #text-editor {
+        width: 100%;
+        height: 500px;
+        font-size: 18px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        text-align: left;
+      }
+      #submit-btn {
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .format-btn {
+        margin-right: 10px;
+        padding: 5px;
+        background-color: #f1f1f1;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .align-btn {
+        margin-right: 10px;
+        padding: 5px;
+        background-color: #f1f1f1;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    </style>
   </head>
   <body>
-    <div class="app">
-      <div class="display">
-        <div class="nav-bar">
-          <img class="logo" src="logo.png" />
-          <form class="search">
-            <input
-              type="text"
-              class="search__field"
-              placeholder="Enter title"
-            />
-            <button class="btn search__btn">
-              <svg class="search__icon">
-                <use href="icons.svg#icon-search"></use>
-              </svg>
-            </button>
-          </form>
-          <button class="nav__btn hidden">
-            <img class="icons" src="add_icon.svg" />
-          </button>
-        </div>
-
-        <div class="note-list">
-          <ul class="list-ul"></ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="bg-active"></div>
-    <div class="plus">
-      <img class="plus-icon" src="plus.svg" />
-      <span class="span-plus">You have no notes yet.</span>
-    </div>
-    <div class="overlay hidden"></div>
-    <div class="add-note-window hidden">
-      <button class="btnClose">&times;</button>
-      <form class="upload">
-        <div class="upload__column">
-          <h3 class="heading">NEW NOTE</h3>
-
-          <input class="title-Input" placeholder="Enter Title" type="text" />
-          <span class="title">title</span>
-        </div>
-        <div class="drop-down">
-          <select class="drop-down">
-            <option value="" disabled selected>Category</option>
-            <option value="volvo">General</option>
-            <option value="saab">Education</option>
-            <option value="opel">Workout</option>
-            <option value="audi">Shopping List</option>
-          </select>
-        </div>
-        <div class="markup">
-          <span class="title">category</span>
-        </div>
-        <button class="btn newNote">
-          <span>Add Note</span>
+    <form>
+      <div>
+        <button class="format-btn" type="button" onclick="formatText('bold')">
+          <b>B</b>
         </button>
-      </form>
-    </div>
+        <button class="format-btn" type="button" onclick="formatText('italic')">
+          <i>I</i>
+        </button>
+        <button
+          class="format-btn"
+          type="button"
+          onclick="formatText('underline')"
+        >
+          <u>U</u>
+        </button>
+      </div>
+      <div>
+        <button
+          class="align-btn"
+          type="button"
+          onclick="formatText('justifyLeft')"
+        >
+          Lewa
+        </button>
+        <button
+          class="align-btn"
+          type="button"
+          onclick="formatText('justifyCenter')"
+        >
+          Środek
+        </button>
+        <button
+          class="align-btn"
+          type="button"
+          onclick="formatText('justifyRight')"
+        >
+          Prawa
+        </button>
+        <button
+          class="align-btn"
+          type="button"
+          onclick="formatText('justifyFull')"
+        >
+          Justuj
+        </button>
+      </div>
+      <div>
+        <div id="text-editor" contenteditable></div>
+      </div>
+      <button id="submit-btn">Zapisz jako HTML</button>
+    </form>
+    <script>
+      const form = document.querySelector("form");
+      const textEditor = document.querySelector("#text-editor");
+      const submitBtn = document.querySelector("#submit-btn");
 
-    <script src="script.js"></script>
+      function formatText(command, value = null) {
+        document.execCommand(command, false, value);
+        textEditor.focus();
+      }
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const html = `<p style="text-align: ${textEditor.style.textAlign}">${textEditor.innerHTML}</p>`;
+        console.log(html);
+        textEditor.innerHTML = "";
+      });
+    </script>
   </body>
 </html>
