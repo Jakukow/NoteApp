@@ -14,7 +14,7 @@
       <div class="display">
         <div class="nav-bar">
           <img class="logo" src="logo.png" />
-          <form class="search">
+          <form class="search hidden">
             <input
               type="text"
               class="search__field"
@@ -22,7 +22,7 @@
             />
             <button class="btn search__btn">
               <svg class="search__icon">
-                <use href="icons.svg#icon-search"></use>
+                <use class="shref" href="icons.svg#icon-search"></use>
               </svg>
             </button>
           </form>
@@ -43,6 +43,10 @@
       <span class="span-plus">You have no notes yet.</span>
     </div>
     <div class="overlay hidden"></div>
+
+    <div class="alert hidden">
+      <span>No notes with the given title!</span>
+    </div>
 
     <div class="add-note-window hidden">
       <button class="btnClose">&times;</button>
@@ -70,8 +74,11 @@
         </button>
       </form>
     </div>
-
-    <div class="formatting">
+    <div class="display-note hidden">
+      <button id="closeView" class="btnClose">&times;</button>
+      <div class="text"></div>
+    </div>
+    <div class="formatting hidden">
       <span class="title-new">dasd</span>
       <form>
         <div>
@@ -136,6 +143,7 @@
         <button class="btn newNote" id="submit-btn">Save Note!</button>
       </form>
     </div>
+
     <script src="script.js"></script>
   </body>
 </html>
